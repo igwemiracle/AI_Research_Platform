@@ -14,10 +14,12 @@ model User {
   email         String    @unique
   emailVerified DateTime?
   image         String?
+  password      String?
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
   accounts      Account[]
   sessions      Session[]
+  documents     Document[]
 }
 
 model Account {
@@ -42,6 +44,17 @@ model Session {
   sessionToken String   @unique
   userId       String
   expires      DateTime
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Document {
+  id         String   @id @default(cuid())
+  userId     String
+  fileName   String
+  fileSize   Int
+  storageKey String   @unique
+  createdAt  DateTime @default(now())
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
