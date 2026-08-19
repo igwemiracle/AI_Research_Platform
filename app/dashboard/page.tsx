@@ -1,5 +1,6 @@
 import { auth } from "@/auth";
 import { redirect } from "next/navigation";
+import Link from "next/link";
 import { logout } from "@/app/actions/signout";
 import { Button } from "@/components/ui/button";
 import {
@@ -10,6 +11,7 @@ import {
   CardContent,
   CardFooter,
 } from "@/components/ui/card";
+
 
 export default async function DashboardPage() {
   const session = await auth();
@@ -26,13 +28,17 @@ export default async function DashboardPage() {
           <CardDescription>You&apos;re logged in.</CardDescription>
         </CardHeader>
 
-        <CardContent>
+        <CardContent className="space-y-4">
           <p className="text-sm text-muted-foreground">
             Signed in as{" "}
             <span className="font-medium text-foreground">
               {session.user.email}
             </span>
           </p>
+
+          <Button asChild className="w-full">
+            <Link href="/dashboard/upload">Upload a document</Link>
+          </Button>
         </CardContent>
 
         <CardFooter>
