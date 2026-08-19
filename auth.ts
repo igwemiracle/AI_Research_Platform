@@ -5,6 +5,11 @@ import { PrismaAdapter } from "@auth/prisma-adapter";
 import bcrypt from "bcryptjs";
 import { prisma } from "@/lib/prisma";
 
+/**
+ * NextAuth configuration for authentication.
+ * This configuration uses Prisma as the adapter and supports GitHub and Credentials providers.
+ * The session strategy is set to JWT.
+ */
 export const { handlers, auth, signIn, signOut } = NextAuth({
   adapter: PrismaAdapter(prisma),
   providers: [
@@ -44,8 +49,23 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       },
     }),
   ],
+
   session: {
     strategy: "jwt",
+    maxAge: 7 * 24 * 60 * 60, // 7 days
   },
+  callbacks: {
+    async jwt({ token, user }) {
+      if (user) {
+        token.id = user.id;
+      }
+      return token;
+    },
+    async session({ session, token }) {
+      if (session.user) {
+        session.user.id = token.id as string;
+      }
+      return session;
+    }}
 });
 
