@@ -39,6 +39,10 @@ export default async function DashboardPage() {
           <Button asChild className="w-full">
             <Link href="/dashboard/upload">Upload a document</Link>
           </Button>
+
+          <Button asChild variant="outline" className="w-full">
+             <Link href="/dashboard/documents">View my documents</Link>
+          </Button>
         </CardContent>
 
         <CardFooter>
