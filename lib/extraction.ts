@@ -1,5 +1,6 @@
 import { extractText, getDocumentProxy } from "unpdf";
 
+// Extracts text and page count from a PDF file buffer
 export async function extractTextFromPdf(
   fileBuffer: Uint8Array
 ): Promise<{ text: string; pageCount: number }> {
