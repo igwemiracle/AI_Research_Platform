@@ -54,13 +54,15 @@ enum ProcessingStatus {
 }
 
 model Document {
-  id         String           @id @default(cuid())
-  userId     String
-  fileName   String
-  fileSize   Int
-  storageKey String           @unique
-  status     ProcessingStatus @default(PENDING)
-  createdAt  DateTime         @default(now())
+  id            String           @id @default(cuid())
+  userId        String
+  fileName      String
+  fileSize      Int
+  storageKey    String           @unique
+  status        ProcessingStatus @default(PENDING)
+  extractedText String?          @db.Text
+  errorMessage  String?
+  createdAt     DateTime         @default(now())
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
