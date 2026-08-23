@@ -64,5 +64,18 @@ model Document {
   errorMessage  String?
   createdAt     DateTime         @default(now())
 
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user   User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  chunks Chunk[]
+}
+
+model Chunk {
+  id         String                      @id @default(cuid())
+  documentId String
+  content    String                      @db.Text
+  chunkIndex Int
+  embedding  Unsupported("vector(768)")?
+
+  document Document @relation(fields: [documentId], references: [id], onDelete: Cascade)
+
+  @@index([documentId])
 }
