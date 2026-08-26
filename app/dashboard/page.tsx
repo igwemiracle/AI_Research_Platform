@@ -35,13 +35,20 @@ export default async function DashboardPage() {
               {session.user.email}
             </span>
           </p>
-
           <Button asChild className="w-full">
             <Link href="/dashboard/upload">Upload a document</Link>
           </Button>
 
           <Button asChild variant="outline" className="w-full">
              <Link href="/dashboard/documents">View my documents</Link>
+          </Button>
+
+          <Button asChild variant="outline" className="w-full">
+              <Link href="/dashboard/search">Search documents</Link>
+          </Button>
+
+          <Button asChild variant="outline" className="w-full">
+             <Link href="/dashboard/ask">Ask your documents</Link>
           </Button>
         </CardContent>
 
