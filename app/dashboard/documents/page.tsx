@@ -20,14 +20,11 @@ export default async function DocumentsPage() {
       createdAt: true,
       status: true,
       errorMessage: true,
-      // extractedText intentionally excluded — not needed for the list view,
-      // and could be large per document
+      _count: {
+        select: { chunks: true },
+      },
     },
   });
 
-  return (
-    <div className="flex min-h-screen items-center justify-center p-4">
-      <DocumentList documents={documents} />
-    </div>
-  );
+  return <DocumentList documents={documents} />;
 }
