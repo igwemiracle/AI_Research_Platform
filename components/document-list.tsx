@@ -184,19 +184,18 @@ export function DocumentList({ documents }: { documents: Document[] }) {
             <button
               key={status}
               onClick={() => setStatusFilter(status)}
-              className={`rounded-md px-2.5 py-1 text-xs font-medium transition-all ${
-                statusFilter === status
+              className={`rounded-md px-2.5 py-1 text-xs font-medium transition-all ${statusFilter === status
                   ? "bg-card text-foreground shadow-xs font-semibold"
                   : "text-muted-foreground hover:text-foreground"
-              }`}
+                }`}
             >
               {status === "ALL"
                 ? "All"
                 : status === "COMPLETED"
-                ? "Ready"
-                : status === "PENDING"
-                ? "Pending"
-                : "Failed"}
+                  ? "Ready"
+                  : status === "PENDING"
+                    ? "Pending"
+                    : "Failed"}
             </button>
           ))}
         </div>
@@ -264,11 +263,10 @@ export function DocumentList({ documents }: { documents: Document[] }) {
                             className={`inline-flex items-center gap-1 rounded-md border px-2 py-0.5 text-xs font-medium ${badgeClass}`}
                           >
                             <StatusIcon
-                              className={`h-3 w-3 ${
-                                isThisRowPending && actionType === "process"
+                              className={`h-3 w-3 ${isThisRowPending && actionType === "process"
                                   ? "animate-spin"
                                   : ""
-                              }`}
+                                }`}
                             />
                             {label}
                           </span>
