@@ -6,7 +6,7 @@ const CHAT_MODEL = "gemini-3.6-flash";
 
 interface RAGResponse {
   answer: string;
-  sources: { fileName: string; content: string }[];
+  sources: { fileName: string; content: string; cited: boolean }[];
 }
 
 export async function generateAnswer(
@@ -28,6 +28,8 @@ export async function generateAnswer(
 
   const prompt = `You are a helpful assistant answering questions based only on the provided document excerpts. If the excerpts don't contain enough information to answer, say so clearly rather than guessing.
 
+Cite your sources inline using the bracketed numbers shown below (e.g. [1], [2]) immediately after any claim drawn from that excerpt. Only cite excerpts you actually use.
+
 Context:
 ${context}
 
@@ -40,8 +42,17 @@ Answer:`;
     contents: prompt,
   });
 
-  return {
-    answer: response.text ?? "No response generated.",
-    sources: chunks.map((c) => ({ fileName: c.fileName, content: c.content })),
-  };
+  const answer = response.text ?? "No response generated.";
+
+  const citedNumbers = new Set(
+    [...answer.matchAll(/\[(\d+)\]/g)].map((match) => parseInt(match[1], 10))
+  );
+
+  const sources = chunks.map((chunk, i) => ({
+    fileName: chunk.fileName,
+    content: chunk.content,
+    cited: citedNumbers.has(i + 1),
+  }));
+
+  return { answer, sources };
 }
